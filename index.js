@@ -5,7 +5,7 @@ import './style.css';
 
 class App extends Component {
 
-  ws = new WebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt');
+  ws = new WebSocket('wss://stream.binance.com:9443/stream?streams=btcusdt@depth');
 
   constructor() {
     super();
@@ -25,7 +25,7 @@ class App extends Component {
       // listen to data sent from the websocket server
       const message = JSON.parse(evt.data);
       this.setState({dataFromServer: message});
-      console.log(message);
+      //console.log(message);
     }
 
     this.ws.onclose = () => {
@@ -36,12 +36,55 @@ class App extends Component {
   }
 
   render() {
+
+    const bid_items = !!this.state.dataFromServer && this.state.dataFromServer.data.b.map((item)=> {
+        
+        const item_price = parseFloat(item[0]).toFixed(2);
+        const item_amount = parseFloat(item[1]);
+        const item_total = item_price * item_amount;
+
+        const is_amount_zero = item_amount.toFixed(2) === 0.00;
+        console.log(item_amount.toFixed(2) == 0.00)
+
+        if(!is_amount_zero){
+          return (
+            <div className="item bid-item">
+              <div className="item-price bid-item-price">{item_price}</div>
+              <div className="item-amount bid-item-text">{item_amount}</div>
+              <div className="item-total bid-item-text">{item_total}</div>
+            </div>
+          )
+        }
+    });
+
+    const ask_items = !!this.state.dataFromServer && this.state.dataFromServer.data.a.map((item)=> {
+
+        const item_price = parseFloat(item[0]).toFixed(2);
+        const item_amount = parseFloat(item[1]);
+        const item_total = item_price * item_amount;
+
+        return (
+          <div className="item bid-item">
+            <div className="item-price ask-item-price">{item_price}</div>
+            <div className="item-amount">{item_amount}</div>
+            <div className="item-total">{item_total}</div>
+          </div>
+        )
+    });
+
     return (
-      <div>
+      <div className="all-items">
         <Hello name={this.state.name} />
-        <p>
-          Start editing to see some magic happen :)
-        </p>
+        <div className="headers">
+          <div className="item">
+            <div className="item-price header-text">Price (USDT)</div>
+            <div className="item-amount header-text">Amount (BTC)</div>
+            <div className="item-total header-text">Total (USDT)</div>
+          </div>
+        </div>
+        <div className="bid-items"> {bid_items} </div>
+        <div className="spot-price"><p>SPOT PRICE</p></div>
+        <div className="ask-items"> {ask_items} </div>
       </div>
     );
   }

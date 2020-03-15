@@ -1,3 +1,56 @@
 h1, p {
   font-family: Lato;
 }
+
+.spot-price {
+  height: 45px;
+  border: 2px solid black;
+}
+
+.all-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  display: flex;
+}
+
+.item-price {
+  width: 120px;
+  padding: 5px;
+}
+.item-amount {
+  width: 120px;
+  padding: 5px;
+}
+.item-total {
+  width: 120px;
+  padding: 5px;
+}
+
+.bid-items {
+
+}
+
+.ask-items {
+
+}
+
+.spot-price {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  width: 400px;
+}
+
+.header-text{
+  color: rgb(153, 153, 153);
+}
+.bid-item-price {
+  color: rgb(234, 0, 112);
+}
+.ask-item-price {
+  color: rgb(112, 168, 0);
+}
