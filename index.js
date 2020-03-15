@@ -40,13 +40,10 @@ class App extends Component {
     const bid_items = !!this.state.dataFromServer && this.state.dataFromServer.data.b.map((item)=> {
         
         const item_price = parseFloat(item[0]).toFixed(2);
-        const item_amount = parseFloat(item[1]);
-        const item_total = item_price * item_amount;
+        const item_amount = parseFloat(item[1]).toFixed(6);
+        const item_total = (item_price * item_amount).toFixed(8);
 
-        const is_amount_zero = item_amount.toFixed(2) === 0.00;
-        console.log(item_amount.toFixed(2) == 0.00)
-
-        if(!is_amount_zero){
+        if(item_amount != 0){
           return (
             <div className="item bid-item">
               <div className="item-price bid-item-price">{item_price}</div>
@@ -60,16 +57,18 @@ class App extends Component {
     const ask_items = !!this.state.dataFromServer && this.state.dataFromServer.data.a.map((item)=> {
 
         const item_price = parseFloat(item[0]).toFixed(2);
-        const item_amount = parseFloat(item[1]);
-        const item_total = item_price * item_amount;
+        const item_amount = parseFloat(item[1]).toFixed(6);
+        const item_total = (item_price * item_amount).toFixed(8);
 
-        return (
-          <div className="item bid-item">
-            <div className="item-price ask-item-price">{item_price}</div>
-            <div className="item-amount">{item_amount}</div>
-            <div className="item-total">{item_total}</div>
-          </div>
-        )
+        if(item_amount != 0){
+          return (
+            <div className="item bid-item">
+              <div className="item-price ask-item-price">{item_price}</div>
+              <div className="item-amount">{item_amount}</div>
+              <div className="item-total">{item_total}</div>
+            </div>
+          )
+        }
     });
 
     return (

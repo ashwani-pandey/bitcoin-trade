@@ -24,10 +24,12 @@ h1, p {
 .item-amount {
   width: 120px;
   padding: 5px;
+  text-align: right;
 }
 .item-total {
   width: 120px;
   padding: 5px;
+  text-align: right;
 }
 
 .bid-items {
